@@ -54,16 +54,15 @@ def generate_keys():
     ## Public key
     primes = generating_prime_numbers()
     while True:
-        p = primes[random.randint(0,100)]
-        q = primes[random.randint(0,100)]
-        if gcd(p,q) == 1:
+        p = primes[random.randint(0,len(primes))]
+        q = primes[random.randint(0,len(primes))]
+        if math.gcd(p,q) == 1:
             break
-    n = p * q
-    fn = (p-1)(q-1)
+    n, fn = calc_n_fn(p,q)
 
     while True:
         e = random.randint(2,fn)
-        if gcd(fn,e) == 1:
+        if math.gcd(fn,e) == 1:
             break
     ## Private key
     (x,y,d) = extended_gcd(fn,e)
