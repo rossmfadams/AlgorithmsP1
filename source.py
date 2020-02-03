@@ -70,3 +70,20 @@ def generate_keys():
         x += fn
     return (n, e, x)
 
+def encrypt_message(message = 'Hello', e = 5, n = 119):
+    encrypted = []
+    for i in range(0, len(message)):
+        a = ord(message[i])
+        c = pow(a, e, n)
+        encrypted.append(c)
+
+    return encrypted
+
+def decrypt_message(encrypted = [4,33,75,75,76], d = 77, n = 119):
+    decrypted = []
+    for i in range(0, len(encrypted)):
+        a = encrypted[i]
+        m = pow(a, d, n)
+        decrypted.append(chr(m))
+
+    return decrypted
