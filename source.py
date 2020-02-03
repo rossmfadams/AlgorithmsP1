@@ -25,10 +25,20 @@ def generating_prime_numbers():
 
     return my_prime_list
 
+def calc_n_fn(p, q):
+    n = p * q
+    fn = (p-1) * (q-1)
+
+    return n, fn
+
 
 def main():
     prime = generating_prime_numbers()
     print(prime)
+    p = prime[0]
+    q = prime[1]
+    n, fn = calc_n_fn(p, q)
+    print('n = ', n, ' fn = ', fn)
 
 def extended_gcd(a=1,b=1):
     if a < b:
