@@ -66,6 +66,7 @@ def generate_keys():
             break
     ## Private key
     (x,y,d) = extended_gcd(fn,e)
-
-    return (n, e, d)
+    if x < 0:
+        x += fn
+    return (n, e, x)
 
