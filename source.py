@@ -87,11 +87,36 @@ def decrypt_message(encrypted=[4, 33, 75, 75, 76], d=77, n=119):
     return decrypted
 
 
+def main_menu():
+    print('Welcome to the RSA encryption and decryption service.\n')
+
+    while True:
+        menu_input = input('Input(m) for Message or Input(d) for Digital Signature: ').upper()
+        if menu_input == 'M':
+            message_menu()
+        elif menu_input == 'D':
+            digital_signature_menu()
+        else:
+            print('You have enter the wrong input')
+
+        if menu_input == 'M' or menu_input == 'D':
+            break
+
+
+def message_menu():
+    print('message menu')
+
+
+def digital_signature_menu():
+    print('Digital signature menu')
+
+
 def main():
     n, e, d = generate_keys()
     encrypted = encrypt_message(message='MyNameIsLongtin', e=e, n=n)
     print(encrypted)
     print(decrypt_message(encrypted=encrypted, d=d, n=n))
+    main_menu()
 
 
 main()
