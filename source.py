@@ -17,13 +17,16 @@ def test_prime_brute_force(p=10):
 
 def generating_prime_numbers():
     my_prime_list = []
+    i = 0
 
-    for i in range(100):
+    while len(my_prime_list) != 10 and i < 1000:
         value = random.randint(10000, 20000)
         if test_prime_brute_force(value):
             my_prime_list.append(value)
+        i += 1
 
     return my_prime_list
+
 
 def calc_n_fn(p, q):
     n = p * q
@@ -32,43 +35,39 @@ def calc_n_fn(p, q):
     return n, fn
 
 
-def main():
-    n, e, d = generate_keys()
-    encryptedM = encrypt_message(message='MyNameIsLongtin', e=e, n=n)
-    print(encryptedM)
-    print(decrypt_message(encrypted=encryptedM, d=d, n=n))
-
 def extended_gcd(a=1,b=1):
     if a < b:
         a, b = b, a
         print('Switched two arguments to ensure a >= b.')
     if b == 0:
-        return (1,0,a)
-    (x,y,d) = extended_gcd(b,a%b)
-    return y,x - a//b*y, d
+        return 1, 0, a
+    (x, y, d) = extended_gcd(b, a % b)
+    return y, x - a//b*y, d
+
 
 def generate_keys():
     
-    ## Public key
+    # Public key
     primes = generating_prime_numbers()
     while True:
-        p = primes[random.randint(0,len(primes) - 1)]
-        q = primes[random.randint(0,len(primes) - 1)]
-        if math.gcd(p,q) == 1:
+        p = primes[random.randint(0, len(primes) - 1)]
+        q = primes[random.randint(0, len(primes) - 1)]
+        if math.gcd(p, q) == 1:
             break
-    n, fn = calc_n_fn(p,q)
+    n, fn = calc_n_fn(p, q)
 
     while True:
-        e = random.randint(2,fn)
-        if math.gcd(fn,e) == 1:
+        e = random.randint(2, fn)
+        if math.gcd(fn, e) == 1:
             break
-    ## Private key
-    (x,y,d) = extended_gcd(fn,e)
+    # Private key
+    (x, y, d) = extended_gcd(fn, e)
     if y < 0:
         y += fn
-    return (n, e, y)
+    return n, e, y
 
-def encrypt_message(message = 'Hello', e = 5, n = 119):
+
+def encrypt_message(message='Hello', e=5, n=119):
     encrypted = []
     for i in range(0, len(message)):
         a = ord(message[i])
@@ -77,7 +76,8 @@ def encrypt_message(message = 'Hello', e = 5, n = 119):
 
     return encrypted
 
-def decrypt_message(encrypted = [4,33,75,75,76], d = 77, n = 119):
+
+def decrypt_message(encrypted=[4, 33, 75, 75, 76], d=77, n=119):
     decrypted = []
     for i in range(0, len(encrypted)):
         a = encrypted[i]
@@ -85,5 +85,13 @@ def decrypt_message(encrypted = [4,33,75,75,76], d = 77, n = 119):
         decrypted.append(chr(m))
 
     return decrypted
+
+
+def main():
+    n, e, d = generate_keys()
+    encrypted = encrypt_message(message='MyNameIsLongtin', e=e, n=n)
+    print(encrypted)
+    print(decrypt_message(encrypted=encrypted, d=d, n=n))
+
 
 main()
