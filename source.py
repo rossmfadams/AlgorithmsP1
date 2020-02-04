@@ -33,12 +33,10 @@ def calc_n_fn(p, q):
 
 
 def main():
-    prime = generating_prime_numbers()
-    print(prime)
-    p = prime[0]
-    q = prime[1]
-    n, fn = calc_n_fn(p, q)
-    print('n = ', n, ' fn = ', fn)
+    n, e, d = generate_keys()
+    encryptedM = encrypt_message(message='MyNameIsLongtin', e=e, n=n)
+    print(encryptedM)
+    print(decrypt_message(encrypted=encryptedM, d=d, n=n))
 
 def extended_gcd(a=1,b=1):
     if a < b:
@@ -54,8 +52,8 @@ def generate_keys():
     ## Public key
     primes = generating_prime_numbers()
     while True:
-        p = primes[random.randint(0,len(primes))]
-        q = primes[random.randint(0,len(primes))]
+        p = primes[random.randint(0,len(primes) - 1)]
+        q = primes[random.randint(0,len(primes) - 1)]
         if math.gcd(p,q) == 1:
             break
     n, fn = calc_n_fn(p,q)
@@ -66,9 +64,9 @@ def generate_keys():
             break
     ## Private key
     (x,y,d) = extended_gcd(fn,e)
-    if x < 0:
-        x += fn
-    return (n, e, x)
+    if y < 0:
+        y += fn
+    return (n, e, y)
 
 def encrypt_message(message = 'Hello', e = 5, n = 119):
     encrypted = []
@@ -87,3 +85,5 @@ def decrypt_message(encrypted = [4,33,75,75,76], d = 77, n = 119):
         decrypted.append(chr(m))
 
     return decrypted
+
+main()
