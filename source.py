@@ -105,11 +105,39 @@ def main_menu():
 
 def message_menu():
     print('message menu')
-
+    while True:
+        menu_input = input('Select (1) for Encryption,(2) for Decryption, or (3) to Close')
+        n, e, y = generate_keys()
+        if menu_input == 1:
+            message = input('Message to encrypt: ')            
+            eMessage = encrypt_message(message, e, n)
+            print('Encrypted message: ' + eMessage)
+        elif menu_input == 2:
+            eMessage = input('Encrypted message: ')
+            message = decrypt_message(eMessage,y,n)
+            print('Decrypted message: ' + message)
+        elif menu_input == 3:
+            break
+        else:
+            print('Invalid input. Try again.')
 
 def digital_signature_menu():
     print('Digital signature menu')
-
+    while True:
+        menu_input = input('Select (1) to Sign, (2) to Verify, or (3) to Close')
+        n, e, y = generate_keys()
+        if menu_input == 1:
+            signature = input('Signature: ')            
+            eSignature = encrypt_message(signature, e, n)
+            print('Encrypted signature: ' + eSignature)
+        elif menu_input == 2:
+            eSignature = input('Encrypted signature to verify: ')
+            signature = decrypt_message(eSignature,y,n)
+            print('Decrypted signature: ' + signature)
+        elif menu_input == 3:
+            break
+        else:
+            print('Invalid input. Try again.')
 
 def main():
     n, e, d = generate_keys()
