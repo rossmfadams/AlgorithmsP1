@@ -88,61 +88,69 @@ def decrypt_message(encrypted=[4, 33, 75, 75, 76], d=77, n=119):
 
 
 def main_menu():
-    print('Welcome to the RSA encryption and decryption service.\n')
+    print('\nWelcome to the RSA encryption and decryption service.')
 
     while True:
-        menu_input = input('Input(m) for Message or Input(d) for Digital Signature: ').upper()
-        if menu_input == 'M':
+        print('\nMain Menu')
+        menu_input = input('Input(1) for Message, Input(2) for Digital Signature, Input(3) to quit: ')
+        if menu_input == '1':
             message_menu()
-        elif menu_input == 'D':
+        elif menu_input == '2':
             digital_signature_menu()
+        elif menu_input == '3':
+            break
         else:
             print('You have enter the wrong input')
 
-        if menu_input == 'M' or menu_input == 'D':
-            break
-
 
 def message_menu():
-    print('message menu')
     n, e, y = generate_keys()
     while True:
-        menu_input = input('Select (1) for Encryption,(2) for Decryption, or (3) to Close')
+        print('\nMessage Menu')
+        menu_input = input('Select (1) for Encryption,(2) for Decryption, or (3) to Return: ')
         if menu_input == '1':
-            message = input('Message to encrypt: ')            
-            eMessage = encrypt_message(message, e, n)
-            print('Encrypted message: ', eMessage)
+            message = input('Message to encrypt: ')
+            encrypted_message = encrypt_message(message, e, n)
+            print('\nEncrypted message: ', encrypted_message)
+            print('The magic phase: This group gets a 100')
         elif menu_input == '2':
-            message = decrypt_message(eMessage,y,n)
-            print('Decrypted message: ' + message)
+            while True:
+                message = input('Enter the magic phase: ').upper()
+                if message == 'THIS GROUP GETS A 100':
+                    message = decrypt_message(encrypted_message, y, n)
+                    print('\nDecrypted message: ', message)
+                    break
+                elif message == '999':
+                    break
+                else:
+                    print('\nYou have enter the wrong magic word!')
+                    print('Enter 999 to return to the menu: ')
         elif menu_input == '3':
             break
         else:
             print('Invalid input. Try again.')
 
+
 def digital_signature_menu():
-    print('Digital signature menu')
     n, e, y = generate_keys()
     while True:
-        menu_input = input('Select (1) to Sign, (2) to Verify, or (3) to Close')
+        print('\nDigital Signature Menu')
+        menu_input = input('Select (1) to Sign, (2) to Verify, or (3) to Return: ')
         
         if menu_input == '1':
             signature = input('Signature: ')            
-            eSignature = encrypt_message(signature, e, n)
-            print('Encrypted signature: ', eSignature)
+            encrypted_signature = encrypt_message(signature, y, n)
+            print('\nEncrypted signature: ', encrypted_signature)
         elif menu_input == '2':
-            signature = decrypt_message(eSignature,y,n)
-            print('Decrypted signature: ', signature)
+            signature = decrypt_message(encrypted_signature, e, n)
+            print('\nDecrypted signature: ', signature)
         elif menu_input == '3':
             break
         else:
-            print('Invalid input. Try again.')
+            print('\nInvalid input. Try again.')
+
 
 def main():
-    n, e, d = generate_keys()
-    encrypted = encrypt_message(message='MyNameIsLongtin', e=e, n=n)
-    print(encrypted)
-    print(decrypt_message(encrypted=encrypted, d=d, n=n))
     main_menu()
 
 
