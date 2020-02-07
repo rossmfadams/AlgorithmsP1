@@ -112,10 +112,10 @@ def message_menu():
             message = input('Message to encrypt: ')
             encrypted_message = encrypt_message(message, e, n)
             print('\nEncrypted message: ', encrypted_message)
-            print('The magic phase: This group gets a 100')
+            print('The magic phrase: This group gets a 100')
         elif menu_input == '2':
             while True:
-                message = input('Enter the magic phase: ').upper()
+                message = input('Enter the magic phrase: ').upper()
                 if message == 'THIS GROUP GETS A 100':
                     message = decrypt_message(encrypted_message, y, n)
                     print('\nDecrypted message: ', message)
@@ -154,4 +154,4 @@ def main():
     main_menu()
 
 
-main()
+main_menu()
