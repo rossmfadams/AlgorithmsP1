@@ -1,4 +1,10 @@
-# Place your code here
+#   source.py for Algorithms - Project 1
+#
+#   This program implements a simple asymmetric cryptography system for use
+#   in cybersecurity applications
+#   
+#   @author Ross Adams, Longtin Hang, and Riley Williams
+
 import math
 import random
 
